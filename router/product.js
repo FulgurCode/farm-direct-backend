@@ -1,6 +1,5 @@
 import express from "express"
 import * as product from "../database/product.js"
-import fs from "fs"
 
 export const router = express.Router()
 

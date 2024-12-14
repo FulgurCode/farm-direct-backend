@@ -21,3 +21,11 @@ export const searchProduct = (name) => {
         resolve(result)
     })
 }
+
+export const getProductById = (id) => {
+    return new Promise((resolve,reject) => {
+        db.collection("products").find({"_id":id}).then((product) => {
+            resolve(product)
+        })
+    })
+}
