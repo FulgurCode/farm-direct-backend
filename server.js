@@ -4,6 +4,7 @@ import { router as authRouter } from "./router/auth.js"
 import { router as productRouter } from "./router/product.js"
 import session from "express-session"
 import cookieParser  from "cookie-parser"
+import Fileupload from "express-fileupload"
 
 const app = express();
 const PORT = 3000;
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({secret:"key",cookie:{maxAge:600000}}));
+app.use(Fileupload())
 
 app.get("/", (req, res) => {
   res.send("Hello from Express!");
