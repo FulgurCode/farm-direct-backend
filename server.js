@@ -1,6 +1,7 @@
 import express from "express";
 import { mongoStart, client } from "./mongo/connect.js"
 import { router as authRouter } from "./router/auth.js"
+import { router as productRouter } from "./router/product.js"
 import session from "express-session"
 import cookieParser  from "cookie-parser"
 
@@ -16,6 +17,7 @@ app.get("/", (req, res) => {
   res.send("Hello from Express!");
 });
 
+app.use("/api/product/", productRouter)
 app.use("/api/auth/", authRouter)
 
 mongoStart().catch(console.dir);
