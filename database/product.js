@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb"
 import { db } from "../mongo/connect.js"
 
 export const addProduct = (product) => {
@@ -24,8 +25,7 @@ export const searchProduct = (name) => {
 
 export const getProductById = (id) => {
     return new Promise((resolve,reject) => {
-        db.collection("products").find({"_id":id}).then((product) => {
-            resolve(product)
-        })
+        let product = db.collection("products").findOne({"_id":ObjectId.createFromHexString(id)})
+        resolve(product)
     })
 }

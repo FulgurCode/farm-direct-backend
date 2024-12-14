@@ -31,7 +31,9 @@ export const generateRazorpay = (orderId, price) => {
             currency: "INR",
             receipt: "" + orderId,
         }
+        console.log(options)
         instance.orders.create(options).then((order) => {
+            console.log(order)
             resolve(order)
         })
     })
