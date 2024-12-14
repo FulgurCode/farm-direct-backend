@@ -2,6 +2,7 @@ import express from "express";
 import { mongoStart, client } from "./mongo/connect.js"
 import { router as authRouter } from "./router/auth.js"
 import { router as productRouter } from "./router/product.js"
+import { router as orderRouter } from "./router/order.js"
 import session from "express-session"
 import cookieParser  from "cookie-parser"
 import Fileupload from "express-fileupload"
@@ -26,6 +27,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/product/", productRouter)
+app.use("/api/order/", orderRouter)
 app.use("/api/auth/", authRouter)
 
 mongoStart().catch(console.dir);
