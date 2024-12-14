@@ -5,10 +5,16 @@ import { router as productRouter } from "./router/product.js"
 import session from "express-session"
 import cookieParser  from "cookie-parser"
 import Fileupload from "express-fileupload"
+import cors from "cors"
 
 const app = express();
 const PORT = 3000;
 
+app.use(cors({
+  origin: "http://localhost:8100",
+  methods: "POST,GET,PUT,DELETE",
+  credentials: true
+}))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
