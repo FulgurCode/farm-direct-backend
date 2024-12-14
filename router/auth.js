@@ -21,8 +21,6 @@ router.post("/signup", (req,res) => {
 router.post("/login", (req,res) => {
     let body = req.body
     auth.getUser(body.email).then((data) => {
-        console.log(data.password)
-        console.log(body.password)
         if (data == null || !bcrypt.compare(body.password,data.password)) {
             res.status(401).json("Invalid credentials")
             return
@@ -34,4 +32,20 @@ router.post("/login", (req,res) => {
 
         res.json("Loggin success")
     })
+})
+
+router.delete("/logout", (req,res) => {
+    req.session.isLoggedIn = false
+    req.session.email = null
+    req.session.userId = null
+
+    res.json("Logged Out Successfully")
+})
+
+router.get("/checklogin", (req,res) => {
+    if (req.session.isLoggedIn) {
+        res.status(200).json("Logged In")
+    } else {
+        res.status(401).json("Not Logged In")
+    }
 })
