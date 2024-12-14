@@ -15,8 +15,8 @@ const checkLogin = (req, res, next) => {
 router.post("/place", checkLogin, (req,res) => {
     let body = req.body
     let productId = req.query.id
-    let price  = body.price * body.quantity
     product.getProductById(productId).then(pro => {
+        let price  = pro.price * body.quantity
         order.placeOrder(price, body.address, body.method).then((id) => {
             order.generateRazorpay(id,price).then((ro) => {
                 res.json(ro)
