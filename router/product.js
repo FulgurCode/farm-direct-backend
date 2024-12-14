@@ -16,3 +16,17 @@ router.post("/add", checkLogin, async (req,res) => {
     product.addProduct(body)
     res.json("product added")
 })
+
+router.get("/search", checkLogin, (req,res) => {
+    let search = req.query.search
+    product.searchProduct(search).then((products) => {
+        res.json(products)
+    })
+})
+
+router.get("/:category", (req,res) => {
+    let category = req.params.category
+    product.productByCategory(category).then((products) => {
+        res.json(products)
+    })
+})
