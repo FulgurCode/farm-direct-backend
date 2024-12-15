@@ -15,7 +15,6 @@ export const productByCategory = (category) => {
         resolve(result)
     })
 }
-
 export const searchProduct = (name) => {
     return new Promise((resolve, reject) => {
         let result = db.collection("products").find({ "$or": [{ "name": { "$regex": name } }, { "description": { "$regex": name } }, { "cetegory": { "$regex": name } }] }).toArray()
@@ -27,5 +26,35 @@ export const getProductById = (id) => {
     return new Promise((resolve, reject) => {
         let product = db.collection("products").findOne({ "_id": ObjectId.createFromHexString(id) })
         resolve(product)
+    })
+}
+
+export const AddBidProduct = (product) => {
+    return new Promise((resolve, reject) => {
+        let product = db.collection("products-bid").insertOne({ product }).then((res) => {
+            resolve(res.insertedId)
+        })
+    })
+}
+
+export const GetBidProducts = () => {
+    return new Promise((resolve, reject) => {
+        let products = db.collection("products-bid").find({}).toArray()
+        resolve(products)
+    })
+}
+
+export const GetBidProduct = (id) => {
+    return new Promise((resolve, reject) => {
+        let product = db.collection("products-bid").findOne({ "_id": ObjectId.createFromHexString(id) })
+    })
+}
+
+export const BidProduct = (id, userId, price) => {
+    return new Promise((resolve, reject) => {
+        db.collection("products-bid").updateOne({ "_id": ObjectId.createFromHexString(id) }, { "$set": { "current_user": userId, "price": price } }).then((res) => {
+            console.log(res)
+            resolve()
+        })
     })
 }
