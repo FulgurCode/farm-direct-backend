@@ -37,10 +37,11 @@ export const AddBidProduct = (product) => {
     })
 }
 
-export const GetBidProducts = () => {
+export const GetBidProducts = (page = 1, limit = 20) => {
     return new Promise((resolve, reject) => {
-        let products = db.collection("products-bid").find({}).toArray()
-        resolve(products)
+        let products = db.collection("products-bid").find().skip((page - 1) * limit).limit(limit).toArray().then((products) => {
+            resolve(products)
+        })
     })
 }
 
@@ -55,6 +56,14 @@ export const BidProduct = (id, userId, price) => {
         db.collection("products-bid").updateOne({ "_id": ObjectId.createFromHexString(id) }, { "$set": { "current_user": userId, "price": price } }).then((res) => {
             console.log(res)
             resolve()
+        })
+    })
+}
+
+export const GetProducts = (page = 1, limit = 20) => {
+    return new Promise((resolve, reject) => {
+        db.collection("product-bid").find().skip((page - 1) * limit).limit(limit).toArray().then((res) => {
+
         })
     })
 }

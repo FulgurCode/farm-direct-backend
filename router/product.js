@@ -1,6 +1,5 @@
 import express from "express"
 import * as product from "../database/product.js"
-import { Timestamp } from "mongodb"
 
 export const router = express.Router()
 
@@ -21,6 +20,15 @@ router.post("/add", checkLogin, async (req, res) => {
         const extension = fileName.substring(fileName.lastIndexOf('.'));
         image.mv('public/images/' + id + '.jpg');
         res.json("product added")
+    })
+})
+
+router.get("/products", checkLogin, (req,res) => {
+    let page = Number(req.query.page)
+    let limit = Number(req.query.limit)
+
+    product.GetBidProduct(page,limit).then((products) => {
+        res.json(products)
     })
 })
 
@@ -51,7 +59,10 @@ router.post("/bidding-product", (req, res) => {
 })
 
 router.get("/bidding-products", (req, res) => {
-    product.GetBidProducts().then((products) => {
+    let page = Number(req.query.page)
+    let limit = Number(req.query.limit)
+
+    product.GetBidProducts(page, limit).then((products) => {
         res.json(products)
     })
 })
