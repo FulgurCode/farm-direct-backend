@@ -9,7 +9,7 @@ const checkLogin = (req, res, next) => {
         next()
     } else {
         next()
-        // res.status(401).json("Not Logged In")
+        res.status(401).json("Not Logged In")
     }
 }
 
@@ -21,6 +21,10 @@ router.post("/place", checkLogin, (req,res) => {
         console.log(pro)
         let price  = pro.price * body.quantity
         order.placeOrder(price, body.address, body.method).then((id) => {
+            if (body.method == "COD") {
+                res.json("Placed Order")
+                return
+            }
             order.generateRazorpay(id,price).then((ro) => {
                 res.json(ro)
             })
