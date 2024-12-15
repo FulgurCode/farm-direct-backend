@@ -27,7 +27,7 @@ router.get("/products", checkLogin, (req,res) => {
     let page = Number(req.query.page)
     let limit = Number(req.query.limit)
 
-    product.GetBidProduct(page,limit).then((products) => {
+    product.GetProducts(page,limit).then((products) => {
         res.json(products)
     })
 })

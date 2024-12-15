@@ -62,8 +62,8 @@ export const BidProduct = (id, userId, price) => {
 
 export const GetProducts = (page = 1, limit = 20) => {
     return new Promise((resolve, reject) => {
-        db.collection("product-bid").find().skip((page - 1) * limit).limit(limit).toArray().then((res) => {
-
+        db.collection("products").find().skip((page - 1) * limit).limit(limit).toArray().then((res) => {
+            resolve(res)
         })
     })
 }
